@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-
+ec=0
 # Test 1: Does it run to completion?
 python best_science_ever.py split test_data.csv 2>/dev/null 1>/dev/null
 if [ $? -eq 0 ]
@@ -8,6 +8,7 @@ then
   echo "Test passed!"
 else
   echo "Test failed!"
+  ec=1
 fi
 
 # Optionally, something like this: test $? -eq 0 || echo "something bad happened"
@@ -21,4 +22,7 @@ then
   echo "Test passed!"
 else
   echo "Test failed!"
+  ec=1
 fi
+
+exit ${ec}
