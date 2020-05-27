@@ -55,19 +55,28 @@ def main():
                         help="The number of rows per output dataframe. Used by "
                              "\"split\" mode.")
 
-    result = parser.parse_args()
+    results = parser.parse_args()
 
     # Load DF
-    df, n_rows = pd.read_csv(results.df), results.n_rows
+    tmp_dfs, n_rows = results.df, results.n_rows
+    if len(tmp_dfs) == 1:
+        df = pd.read_csv(tmp_dfs[0])
+    else:
+        dfs = [pd.read_csv(tmp_df) for tmp_df in tmp_dfs]
 
     # Assign the correct functions and apply one
     fn_mapping = {"split": lambda df, n_rows: split(df, n_rows),
                   "process": lambda df, n_rows: process(df),
                   "concat": lambda df, n_rows: concat(df)}
-    new_df = fn_mapping[result.mode](df, n_rows)
+    new_df = fn_mapping[results.mode](df, n_rows)
 
     # Save the new dataframe
-    pd.write_csv(results.df.replace('.csv','_processed.csv'))
+    if isinstance(new_df, list):
+        for _idx, ndf in enumerate(new_df):
+            ndf.to_csv(tmp_dfs[0].replace('.csv',
+                                          '_{0}_processed.csv'.format(_idx)))
+    else:
+        new_df.to_csv(tmp_dfs[0].replace('.csv','_processed.csv'))
 
 
 if __name__ == "__main__":
