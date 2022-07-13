@@ -16,4 +16,6 @@ jobs:
       - name: Install Dependencies
         run: pip install -r requirements.txt
       - name: Run test
-        run: bash code/test.sh
+        run: |
+          cd code
+          bash test.sh
