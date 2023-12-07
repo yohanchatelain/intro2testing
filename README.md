@@ -162,7 +162,14 @@ All the tests should pass except the last one, mimicking `Test 2` in `best_scien
    ```
    </details>
 6. Check GitHub action is passing now.
+   A GitHub Action testing the package is already present at [.github/workflows/python-app.yml](.github/workflows/python-app.yml).
+   This is a default template available when creating a `New workflow` on GitHub.
+   GitHub has a [Marketplace](https://github.com/marketplace?type=actions) gathering all action templates.
+   Have a look at it to understand its structure and syntax.
+   
+
    <details>
    <summary> Answer </summary>
-   Here is the answer.
+
+   ![here](./github_action_successing.png)
    </details>
