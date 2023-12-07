@@ -36,4 +36,4 @@ jobs:  # Defines a collection of jobs to run in parallel
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Test with pytest
       run: |  # Run the pytest command to execute tests
-        pytest
+        pytest -v
