@@ -89,9 +89,12 @@ def main():
     # Save the new dataframe
     if isinstance(new_df, list):
         for _idx, ndf in enumerate(new_df):
-            ndf.to_csv(tmp_dfs[0].replace(".csv", "_{0}_processed.csv".format(_idx)))
+            ndf.to_csv(
+                tmp_dfs[0].replace(".csv", "_{0}_processed.csv".format(_idx)),
+                index=False,
+            )
     else:
-        new_df.to_csv(tmp_dfs[0].replace(".csv", "_processed.csv"))
+        new_df.to_csv(tmp_dfs[0].replace(".csv", "_processed.csv"), index=False)
 
 
 if __name__ == "__main__":
