@@ -1,0 +1,27 @@
+[build-system]
+requires = ["hatchling", "pathspec"]
+build-backend = "hatchling.build"
+
+[project]
+name = "best_science_ever"
+version = "0.0.1"
+description = "Best science tool."
+authors = [{ name = "Greg Kiar" }]
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+]
+license = { file = "LICENSE" }
+dependencies = [
+    "numpy>=1.18.4",
+    "pandas>=1.0.3",
+    "pytest"
+]
+
+[project.scripts]
+best_science_ever = "best_science_ever.best_science_ever:main"
+
+[project.urls]
+"Source Code" = "https://github.com/yohanchatelain/intro2testing"
