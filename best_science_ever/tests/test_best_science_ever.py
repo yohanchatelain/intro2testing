@@ -153,9 +153,6 @@ def test_splitting_same_number_of_rows():
     """Test that splitting a dataframe gives the same number of rows."""
     df = pd.DataFrame(np.random.rand(10, 5))  # Create a random dataframe
     split_dfs = split(df, 10)
-    print()
-    print(df)
-    print(split_dfs)
     assert (
         len(split_dfs) == 1
     ), "Splitting a dataframe should give the same number of rows"
@@ -186,9 +183,9 @@ def test_cli_splitting_same_number_of_rows():
         ), f"Split file {split_filename} does not have expected row count"
 
     # Cleanup - remove created files
-    # os.remove(test_filename)
-    # for i in range(1):
-    #     os.remove(f"test_data_{i}_processed.csv")
+    os.remove(test_filename)
+    for i in range(1):
+        os.remove(f"test_data_{i}_processed.csv")
 
 
 if __name__ == "__main__":
