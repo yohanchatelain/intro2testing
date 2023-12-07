@@ -108,6 +108,9 @@ All the tests should pass except the last one, mimicking `Test 2` in `best_scien
    </details>
 
 3. Fix the bug.
+   
+   :warning: run `pip install .` after modifying your code to install your modifications.
+
    <details>
    <summary> Answer </summary>
 
@@ -124,6 +127,7 @@ All the tests should pass except the last one, mimicking `Test 2` in `best_scien
     ```
 
     With this modification, the saved CSV files will not include the DataFrame index, and the structure of the output files should match that of the input file more closely.
+
    </details>
 4. Ensure tests are passing.
    <details>
@@ -162,10 +166,10 @@ All the tests should pass except the last one, mimicking `Test 2` in `best_scien
    ```
    </details>
 6. Check GitHub action is passing now.
-   A GitHub Action testing the package is already present at [.github/workflows/python-app.yml](.github/workflows/python-app.yml).
+   
+   A GitHub Action for testing the package is already present at [.github/workflows/python-app.yml](.github/workflows/python-app.yml). Take a look at it to understand its structure and syntax.
    This is a default template available when creating a `New workflow` on GitHub.
    GitHub has a [Marketplace](https://github.com/marketplace?type=actions) gathering all action templates.
-   Have a look at it to understand its structure and syntax.
    
 
    <details>
