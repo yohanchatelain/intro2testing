@@ -6,6 +6,13 @@ import pandas as pd
 from best_science_ever.best_science_ever import concat, process, split
 
 
+def remove_file(filename):
+    try:
+        os.remove(filename)
+    except FileNotFoundError:
+        pass
+
+
 def test_split():
     """Test the split function."""
     df = pd.DataFrame(np.random.rand(100, 5))  # Create a random dataframe
@@ -39,7 +46,7 @@ def test_cli_split():
     """Test the CLI behavior for 'split' mode."""
     # Create a sample dataframe and save it as a CSV file for testing
     test_df = pd.DataFrame({"A": range(50), "B": range(50, 100)})
-    test_filename = "test_data.csv"
+    test_filename = "test_data_df.csv"
     test_df.to_csv(test_filename, index=False)
 
     # Run the script with the 'split' mode
@@ -50,7 +57,7 @@ def test_cli_split():
 
     # Check if the split files are created correctly
     for i in range(5):  # Expecting 5 files because 50 rows split into groups of 10
-        split_filename = f"test_data_{i}_processed.csv"
+        split_filename = f"test_data_df_{i}_processed.csv"
         assert os.path.exists(
             split_filename
         ), f"Split file {split_filename} does not exist"
@@ -60,16 +67,16 @@ def test_cli_split():
         ), f"Split file {split_filename} does not have expected row count"
 
     # Cleanup - remove created files
-    os.remove(test_filename)
+    remove_file(test_filename)
     for i in range(5):
-        os.remove(f"test_data_{i}_processed.csv")
+        remove_file(f"test_data_df_{i}_processed.csv")
 
 
 def test_cli_process():
     """Test the CLI behavior for 'process' mode."""
     # Create a sample dataframe and save it as a CSV file for testing
     test_df = pd.DataFrame({"A": range(50), "B": range(50, 100)})
-    test_filename = "test_data.csv"
+    test_filename = "test_data_df.csv"
     test_df.to_csv(test_filename, index=False)
 
     # Run the script with the 'process' mode
@@ -79,7 +86,7 @@ def test_cli_process():
     )
 
     # Check if the processed file is created correctly
-    processed_filename = "test_data_processed.csv"
+    processed_filename = "test_data_df_processed.csv"
     assert os.path.exists(
         processed_filename
     ), f"Processed file {processed_filename} does not exist"
@@ -92,15 +99,15 @@ def test_cli_process():
     ), f"Processed file {processed_filename} does not have 'mean' column"
 
     # Cleanup - remove created files
-    os.remove(test_filename)
-    os.remove(processed_filename)
+    remove_file(test_filename)
+    remove_file(processed_filename)
 
 
 def test_cli_concat():
     """Test the CLI behavior for 'concat' mode."""
     # Create a sample dataframe and save it as a CSV file for testing
     test_df = pd.DataFrame({"A": range(50), "B": range(50, 100)})
-    test_filename = "test_data.csv"
+    test_filename = "test_data_df.csv"
     test_df.to_csv(test_filename, index=False)
 
     # Run the script with the 'concat' mode
@@ -110,7 +117,7 @@ def test_cli_concat():
     )
 
     # Check if the concatenated file is created correctly
-    concatenated_filename = "test_data_processed.csv"
+    concatenated_filename = "test_data_df_processed.csv"
     assert os.path.exists(
         concatenated_filename
     ), f"Concatenated file {concatenated_filename} does not exist"
@@ -120,8 +127,8 @@ def test_cli_concat():
     ), f"Concatenated file {concatenated_filename} does not have expected row count"
 
     # Cleanup - remove created files
-    os.remove(test_filename)
-    os.remove(concatenated_filename)
+    remove_file(test_filename)
+    remove_file(concatenated_filename)
 
 
 def test_cli_invalid_mode():
@@ -158,11 +165,11 @@ def test_splitting_same_number_of_rows():
     ), "Splitting a dataframe should give the same number of rows"
 
 
-def test_cli_splitting_same_number_of_rows():
+def test_cli_splitting_same_number_of_rows_diff():
     """Test that splitting a dataframe gives the same number of rows."""
     # Create a sample dataframe and save it as a CSV file for testing
     test_df = pd.DataFrame({"A": range(10), "B": range(10, 20)})
-    test_filename = "test_data.csv"
+    test_filename = "test_data_df.csv"
     test_df.to_csv(test_filename, index=False)
 
     # Run the script with the 'split' mode
@@ -172,21 +179,20 @@ def test_cli_splitting_same_number_of_rows():
     )
 
     # Check if the split files are created correctly
-    for i in range(1):  # Expecting 1 files because 10 rows split into groups of 10
-        split_filename = f"test_data_{i}_processed.csv"
-        assert os.path.exists(
-            split_filename
-        ), f"Split file {split_filename} does not exist"
-        split_df = pd.read_csv(split_filename)
-        assert (
-            len(split_df) == 10
-        ), f"Split file {split_filename} does not have expected row count"
+    split_filename = "test_data_0_processed.csv"
+    assert os.path.exists(split_filename), f"Split file {split_filename} does not exist"
+    split_df = pd.read_csv(split_filename)
+    assert (
+        len(split_df) == 10
+    ), f"Split file {split_filename} does not have expected row count"
+
+    result = subprocess.run(["diff", "test_data_df.csv", "test_data_0_processed.csv"])
+
+    assert (
+        result.returncode == 0
+    ), "Splitting a dataframe with the same number of rows should give the same result"
 
     # Cleanup - remove created files
-    os.remove(test_filename)
+    remove_file(test_filename)
     for i in range(1):
-        os.remove(f"test_data_{i}_processed.csv")
-
-
-if __name__ == "__main__":
-    test_cli_splitting_same_number_of_rows()
+        remove_file(f"test_data_{i}_processed.csv")

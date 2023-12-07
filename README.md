@@ -17,9 +17,9 @@ Video content is available:
 
 ### Warning
 
-Greg uses Travis-CI.org to do the remote tests on his GitHub repo. 
-Since 2021 Travis-CI.org no longer exists, there is only the commercial Travic-CI.com. 
-So instead we will here use GitHub actions. 
+Greg uses Travis-CI.org to do the remote tests on his GitHub repo.
+Since 2021 Travis-CI.org no longer exists, there is only the commercial Travic-CI.com.
+So instead we will here use GitHub actions.
 Thus you can follow the video up until 55:23, then follow the instructions below to set up the GitHub action workflow.
 
 
@@ -48,13 +48,13 @@ If you don't want to mess up your current setup
 ```bash
 # Create a new virtual environment named brainhack-tutorial-ci
 python3 -m venv brainhack-tutorial-ci
-# Activate the environment 
+# Activate the environment
 source brainhack-tutorial-ci/bin/activate
 ```
 
 ### Install the package
 
-Have a look at `pyproject.toml` that configures the project and install the dependencies
+Have a look at `pyproject.toml` that configures the project and installs the dependencies.
 
 ```bash
 pip install .
@@ -69,20 +69,34 @@ Add `-v` to enable verbose mode.
 pytest -v
 ```
 
-All the tests should pass except last one mimicking `Test 2` in `best_science_ever/test.sh`
+All the tests should pass except the last one mimicking `Test 2` in `best_science_ever/test.sh`
 
 #### Fixing the bug
 
-1. Try to understand the issue.
+1. Isolate the failing test
+
+   Being able to replay one test without re-executing may be helpful, especially when you
+   have a long test suite to run.
+   To do so, you can use the `-k <regexp>` option of `pytest` to select tests matching the regexp.
+
    <details>
    <summary> Answer </summary>
-    
+
+   ```bash
+   pytest -v -k test_cli_splitting_same_number_of_rows_diff
+   ```
+   </details>
+
+2. Try to understand the issue.
+   <details>
+   <summary> Answer </summary>
+
     The output from the `diff` command shows a difference between `test_data.csv` and `test_data_0_processed.csv`. Specifically, the processed file (`test_data_0_processed.csv`) includes an additional, unnamed column at the beginning. This additional column appears to be the index of the DataFrame being saved to the CSV file.
 
     This issue typically occurs when saving a DataFrame to a CSV file in Pandas without specifying that the index should not be included. By default, pandas' `to_csv` method includes the DataFrame index as the first column in the CSV file.
    </details>
 
-2. Fix the bug.
+3. Fix the bug.
    <details>
    <summary> Answer </summary>
 
@@ -100,7 +114,7 @@ All the tests should pass except last one mimicking `Test 2` in `best_science_ev
 
     With this modification, the saved CSV files will not include the DataFrame index, and the structure of the output files should match that of the input file more closely.
    </details>
-3. Ensure tests are passing.
+4. Ensure tests are passing.
    <details>
    <summary> Answer </summary>
 
@@ -110,7 +124,7 @@ All the tests should pass except last one mimicking `Test 2` in `best_science_ev
     platform linux -- Python 3.10.12, pytest-7.4.3, pluggy-1.3.0 -- BrainHackMontreal2023/Tutorial_CI_CD/intro2testing/brainhack-tutorial-ci/bin/python3
     cachedir: .pytest_cache
     rootdir: BrainHackMontreal2023/Tutorial_CI_CD/intro2testing
-    collected 10 items                                                                                                                              
+    collected 10 items
     best_science_ever/tests/test_best_science_ever.py::test_split PASSED                                   [ 10%]
     best_science_ever/tests/test_best_science_ever.py::test_process PASSED                                 [ 20%]
     best_science_ever/tests/test_best_science_ever.py::test_concat PASSED                                  [ 30%]
@@ -126,17 +140,17 @@ All the tests should pass except last one mimicking `Test 2` in `best_science_ev
     ```
    </details>
 
-4. Add, commit and push your changes.
+5. Add, commit and push your changes.
    <details>
    <summary> Answer </summary>
 
    ```bash
    git add best_science_ever/best_science_ever.py
-   git commit -m "Fix failing test test_splitting_same_number_of_rows"
+   git commit -m "Fix failing test test_cli_splitting_same_number_of_rows_diff"
    git push
    ```
    </details>
-5. Check GitHub action is passing now.
+6. Check GitHub action is passing now.
    <details>
    <summary> Answer </summary>
    Here is the answer.
