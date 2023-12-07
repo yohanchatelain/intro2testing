@@ -1,27 +1,35 @@
 [build-system]
-requires = ["hatchling", "pathspec"]
+# Specifies the tools required to build the project.
+# 'hatchling' is a build backend, and 'pathspec' is used for pattern matching of file paths.
+requires = ["hatchling", "pathspec"]  
+# Indicates the build backend to use, here it's 'hatchling'.
 build-backend = "hatchling.build"
 
 [project]
-name = "best_science_ever"
-version = "0.0.1"
-description = "Best science tool."
-authors = [{ name = "Greg Kiar" }]
-readme = "README.md"
-requires-python = ">=3.8"
-classifiers = [
+name = "best_science_ever"  # The name of the project.
+version = "0.0.1"  # The current version of the project.
+description = "Best science tool."  # A short description of the project.
+# A list of authors of the project.
+authors = [{ name = "Greg Kiar" }, { name = "Francois Paugam"}, { name = "Yohan Chatelain"}]  
+readme = "README.md"  # A relative path to the project's README file.
+requires-python = ">=3.8"  # Specifies the Python version requirement for the project.
+classifiers = [  # Classifiers to categorize the project, used in PyPI listings.
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: MIT License",
 ]
-license = { file = "LICENSE" }
-dependencies = [
+# Specifies the license under which the project is released, referring to the LICENSE file.
+license = { file = "LICENSE" }  
+# List of dependencies required by the project, replaceing requirements.txt
+dependencies = [  
     "numpy>=1.18.4",
     "pandas>=1.0.3",
     "pytest"
 ]
 
 [project.scripts]
-best_science_ever = "best_science_ever.best_science_ever:main"
+# Defines a script that can be executed, linking a command-line command to a Python function.
+best_science_ever = "best_science_ever.best_science_ever:main"  
 
 [project.urls]
-"Source Code" = "https://github.com/yohanchatelain/intro2testing"
+# URL to the source code, typically used for reference or contributions.
+"Source Code" = "https://github.com/yohanchatelain/intro2testing"  

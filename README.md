@@ -4,12 +4,11 @@ Base repo for teaching testing at [BrainHack Montreal 2023](https://brainhackmtl
 
 ## Material
 
-This tutorial is based on Greg Kiar's work [here](https://school.brainhackmtl.org/modules/testing/) BrainHack 2020
-that François Paugam extended for BrainHack 2022
+This tutorial is based on Greg Kiar's work [here](https://school.brainhackmtl.org/modules/testing/) BrainHack 2020, which François Paugam extended for BrainHack 2022.
 
-This project extends the original tutorial with the use of `pytest` and GitHub action.
+This project extends the original tutorial with the use of `pytest` and GitHub Actions.
 The project structure has been reorganized to be used with `pytest`.
-The original scripts used by Greg in his video are located in `best_science_ever` if you want to reproduce the experiments Greg shows in his video.
+The original scripts used by Greg in his video are located in the `best_science_ever/` directory if you want to reproduce the experiments Greg shows in his video.
 
 Video content is available:
 
@@ -17,10 +16,10 @@ Video content is available:
 
 ### Warning
 
-Greg uses Travis-CI.org to do the remote tests on his GitHub repo.
-Since 2021 Travis-CI.org no longer exists, there is only the commercial Travic-CI.com.
-So instead we will here use GitHub actions.
-Thus you can follow the video up until 55:23, then follow the instructions below to set up the GitHub action workflow.
+Greg uses Travis-CI.org to conducte remote tests on his GitHub repo.
+Since 2021, Travis-CI.org no longer exists; there is only the commercial Travic-CI.com.
+So, instead, we will use GitHub Actions here.
+You can follow the video up until 55:23, then follow the instructions below to set up the GitHub Actions workflow.
 
 
 ## Installation
@@ -28,22 +27,35 @@ Thus you can follow the video up until 55:23, then follow the instructions below
 ### Requirements
 
 You need `git` and `python>=3.8` installed.
-If you want to work in an isolated environment, you can work in the following docker image
+
+If you want to work in an isolated environment, you can work in the following Docker image
 
 ```bash
 docker pull python:3.10
 docker run -it python:3.10 /bin/bash
 ```
 
-### Clone the repo
+### Fork the repo
+
+1. Visit the GitHub repository at [https://github.com/yohanchatelain/intro2testing](https://github.com/yohanchatelain/intro2testing).
+
+2. In the top-right corner of the page, you'll find a button labeled "Fork". Click on this button.
+
+3. If prompted, select the account under which you want to fork the repository.
+
+4. Once the forking process is complete, you'll have your copy of the repository under your GitHub account. You can then clone, modify, and push changes to this forked repository.
+
+Remember, after forking the repository, you should clone your fork to your local machine to start working on it. You can do this by using the `git clone` command with the URL of your forked repository. For example:
 
 ```bash
-git clone https://github.com/yohanchatelain/intro2testing
+git clone https://github.com/[your-username]/intro2testing
 ```
+
+Replace `[your-username]` with your actual GitHub username. After cloning, you can make changes, commit them, and push them back to your forked repository. When you're ready, you can create a pull request to the original repository to propose incorporating your changes.
 
 ### Create a virtual environment
 
-If you don't want to mess up your current setup
+If you don't want to mess up your current Python setup
 
 ```bash
 # Create a new virtual environment named brainhack-tutorial-ci
@@ -54,7 +66,7 @@ source brainhack-tutorial-ci/bin/activate
 
 ### Install the package
 
-Have a look at `pyproject.toml` that configures the project and installs the dependencies.
+Have a look at `pyproject.toml`, which configures the project and installs the dependencies.
 
 ```bash
 pip install .
@@ -69,14 +81,13 @@ Add `-v` to enable verbose mode.
 pytest -v
 ```
 
-All the tests should pass except the last one mimicking `Test 2` in `best_science_ever/test.sh`
+All the tests should pass except the last one, mimicking `Test 2` in `best_science_ever/test.sh`
 
-#### Fixing the bug
+### Fixing the bug
 
 1. Isolate the failing test
 
-   Being able to replay one test without re-executing may be helpful, especially when you
-   have a long test suite to run.
+   Being able to replay one test without re-executing the entire suite may be helpful, especially when you have a long test suite to run.
    To do so, you can use the `-k <regexp>` option of `pytest` to select tests matching the regexp.
 
    <details>
