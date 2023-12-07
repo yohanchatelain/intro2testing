@@ -179,16 +179,14 @@ def test_cli_splitting_same_number_of_rows_diff():
     )
 
     # Check if the split files are created correctly
-    split_filename = "test_data_0_df_processed.csv"
+    split_filename = "test_data_df_0_processed.csv"
     assert os.path.exists(split_filename), f"Split file {split_filename} does not exist"
     split_df = pd.read_csv(split_filename)
     assert (
         len(split_df) == 10
     ), f"Split file {split_filename} does not have expected row count"
 
-    result = subprocess.run(
-        ["diff", "test_data_df.csv", "test_data_0_df_processed.csv"]
-    )
+    result = subprocess.run(["diff", test_filename, split_filename])
 
     assert (
         result.returncode == 0
