@@ -108,6 +108,9 @@ All the tests should pass except the last one, mimicking `Test 2` in `best_scien
    </details>
 
 3. Fix the bug.
+
+   :warning: run `pip install .` after modifying your code to install your modifications.
+
    <details>
    <summary> Answer </summary>
 
