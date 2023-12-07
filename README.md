@@ -76,6 +76,7 @@ All the tests should pass except last one mimicking `Test 2` in `best_science_ev
 1. Try to understand the issue.
    <details>
    <summary> Answer </summary>
+    
     The output from the `diff` command shows a difference between `test_data.csv` and `test_data_0_processed.csv`. Specifically, the processed file (`test_data_0_processed.csv`) includes an additional, unnamed column at the beginning. This additional column appears to be the index of the DataFrame being saved to the CSV file.
 
     This issue typically occurs when saving a DataFrame to a CSV file in Pandas without specifying that the index should not be included. By default, pandas' `to_csv` method includes the DataFrame index as the first column in the CSV file.
@@ -84,6 +85,7 @@ All the tests should pass except last one mimicking `Test 2` in `best_science_ev
 2. Fix the bug.
    <details>
    <summary> Answer </summary>
+
     To fix this, you can modify the `to_csv` call in your `best_science_ever.py` script to include the argument `index=False`. This will prevent pandas from writing the index to the CSV file. The modified line in the `main()` function should look like this:
 
     ```python
@@ -123,24 +125,18 @@ All the tests should pass except last one mimicking `Test 2` in `best_science_ev
     ============================================================== 10 passed in 1.06s ===============================================================
     ```
    </details>
-4. Add and commit your changes.
+
+4. Add, commit and push your changes.
    <details>
    <summary> Answer </summary>
 
    ```bash
-   git add best_science_ever/best_science_ever.py <br>
+   git add best_science_ever/best_science_ever.py
    git commit -m "Fix failing test test_splitting_same_number_of_rows"
-   ```
-   </details>
-5. Push your commit.
-   <details>
-   <summary> Answer </summary>
-   
-   ```bash
    git push
    ```
    </details>
-6. Check GitHub action is passing now.
+5. Check GitHub action is passing now.
    <details>
    <summary> Answer </summary>
    Here is the answer.
